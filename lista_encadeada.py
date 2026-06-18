@@ -81,74 +81,66 @@ class Lista_encadeada():
             
         return False
 
-
     def min(self):
+        if self.vazia():
+            return None
         aux = self.cabeca
-
-        if aux:
-            menor = aux.info
-
-            while aux:
-                if aux.info < menor:
-                    menor = aux.info
-
-                aux = aux.prox
-
-            return menor
+        menor = aux.info
+        while aux:
+            if aux.info < menor:
+                menor = aux.info
+            aux = aux.prox
+        return menor
 
     def max(self):
+        if self.vazia():
+            return None
         aux = self.cabeca
-
-        if aux:
-            maior = aux.info
-
-            while aux:
-                if aux.info > maior:
-                    maior = aux.info
-
-                aux = aux.prox
-
-            return maior
+        maior = aux.info
+        while aux:
+            if aux.info > maior:
+                maior = aux.info
+            aux = aux.prox
+        return maior
 
     def sum(self):
-        soma = 0
+        total = 0
         aux = self.cabeca
-
         while aux:
-            soma += aux.info
+            total += aux.info
             aux = aux.prox
-
-        return soma
-
-    def len(self):
-        qtd = 0
-        aux = self.cabeca
-
-        while aux:
-            qtd += 1
-            aux = aux.prox
-
-        return qtd
+        return total
 
     def avg(self):
-        if not self.vazia():
-            return self.sum() / self.len()
+        tamanho = self.len()
+        if tamanho == 0:
+            return None
+        return self.sum() / tamanho
+
+    def len(self):
+        contador = 0
+        aux = self.cabeca
+        while aux:
+            contador += 1
+            aux = aux.prox
+        return contador
 
     def append(self, outra_lista):
+        if outra_lista.vazia():
+            return
         aux = outra_lista.cabeca
-
         while aux:
             self.inserir_final(aux.info)
             aux = aux.prox
 
     def reverse(self):
-        ant = None
+        anterior = None
         atual = self.cabeca
-
         while atual:
-            prox = atual.prox
-            atual.prox = ant
-            ant = atual
-            atual = prox
+            proximo = atual.prox
+            atual.prox = anterior
+            anterior = atual
+            atual = proximo
+        self.cabeca = anterior
 
-        self.cabeca = ant  
+      

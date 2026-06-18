@@ -28,6 +28,55 @@ class Pilha():
         if not self.Vazia():
             return self.topo.info
         
+    def buscar(self, info):
+        aux = self.topo
+        while aux:
+            if aux.info == info:
+                return True
+            aux = aux.prox
+        return False
+
+    def editar(self, info, novo_info=None):
+        aux = self.topo
+        while aux:
+            if aux.info == info:
+                if novo_info is None:
+                    novo_info = input(f"Novo valor para {info}: ")
+                aux.info = novo_info
+                return True
+            aux = aux.prox
+        return False
+
+    def remover(self, info):
+        aux = self.topo
+        anterior = None
+        while aux:
+            if aux.info == info:
+                if anterior is None:
+                    self.topo = aux.prox
+                else:
+                    anterior.prox = aux.prox
+                del aux
+                return True
+            anterior = aux
+            aux = aux.prox
+        return False
+
+    def remover_repetidos(self):
+        vistos = set()
+        aux = self.topo
+        anterior = None
+        while aux:
+            if aux.info in vistos:
+                anterior.prox = aux.prox
+                temp = aux
+                aux = aux.prox
+                del temp
+            else:
+                vistos.add(aux.info)
+                anterior = aux
+                aux = aux.prox
+
     def imprimir(self):
         if not self.Vazia():
             #crio pilha aux Vazia
@@ -40,65 +89,3 @@ class Pilha():
             while not aux.Vazia():
                 self.push(aux.pop())
     
-    
-    def buscar(self, info):
-        aux = self.topo
-
-        while aux:
-            if aux.info == info:
-                return True
-
-            aux = aux.prox
-
-        return False
-
-    def editar(self, antigo, novo):
-        aux = self.topo
-
-        while aux:
-            if aux.info == antigo:
-                aux.info = novo
-                return True
-
-            aux = aux.prox
-
-        return False
-
-    def remover(self, info):
-        aux = self.topo
-        ant = None
-
-        while aux:
-            if aux.info == info:
-
-                if ant == None:
-                    self.topo = aux.prox
-
-                else:
-                    ant.prox = aux.prox
-
-                del aux
-                return True
-
-            ant = aux
-            aux = aux.prox
-
-        return False
-
-    def remover_repetidos(self):
-        aux = self.topo
-
-        while aux:
-            ant = aux
-            atual = aux.prox
-
-            while atual:
-                if atual.info == aux.info:
-                    ant.prox = atual.prox
-                    atual = atual.prox
-
-                else:
-                    ant = atual
-                    atual = atual.prox
-
-            aux = aux.prox
